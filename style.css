@@ -1,0 +1,424 @@
+/* =========================================================
+   Token system — tema "buku sketsa" minimalis
+   ========================================================= */
+:root {
+  --paper: #F6F4EF;
+  --paper-alt: #EFEBE2;
+  --ink: #201F1D;
+  --muted: #6B6558;
+  --line: #D9D2C2;
+
+  /* "pensil warna" — satu warna per hobi */
+  --pencil-1: #E15B3F; /* menggambar — merah pensil */
+  --pencil-2: #3B6FA0; /* jalan-jalan — biru pensil */
+  --pencil-3: #E0A72E; /* main game — kuning pensil */
+
+  --radius: 14px;
+  --maxw: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+
+p { margin: 0 0 1rem; color: var(--ink); }
+
+a { color: inherit; }
+
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+
+.section-inner, .nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* =========================================================
+   Nav
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 244, 239, 0.9);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+}
+.nav-brand .dot { color: var(--pencil-1); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 2px;
+  background: var(--pencil-1);
+  transition: width 0.25s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.nav-toggle span {
+  width: 22px; height: 2px;
+  background: var(--ink);
+  display: block;
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.hero {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem 5rem;
+  overflow: hidden;
+}
+.hero-inner { max-width: 640px; }
+
+.hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.15;
+  margin-bottom: 1.4rem;
+}
+
+.scribble-wrap {
+  position: relative;
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  color: var(--pencil-1);
+  font-size: 1.05em;
+}
+.scribble {
+  position: absolute;
+  left: 0; bottom: -0.15em;
+  width: 100%; height: 0.4em;
+  overflow: visible;
+}
+.scribble path {
+  fill: none;
+  stroke: var(--pencil-1);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  animation: draw 1.2s ease forwards 0.4s;
+}
+.scribble-small path { stroke: var(--pencil-2); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+.hero-text {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 520px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--pencil-2);
+  outline-offset: 2px;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--pencil-1); }
+.btn-ghost {
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+}
+.btn-ghost:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--pencil-2); }
+
+.hero-doodles {
+  position: absolute;
+  right: -20px;
+  top: 30px;
+  opacity: 0.9;
+}
+.doodle { width: 140px; height: 140px; }
+@media (max-width: 720px) { .hero-doodles { display: none; } }
+
+/* =========================================================
+   Sections generic
+   ========================================================= */
+.section { padding: 5rem 0; }
+.section-alt { background: var(--paper-alt); }
+.section h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  max-width: 620px;
+  margin-bottom: 1.2rem;
+}
+.section-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.section-note code {
+  background: var(--paper-alt);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.highlight {
+  position: relative;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.highlight-1 { color: var(--pencil-1); }
+.highlight-2 { color: var(--pencil-2); }
+.highlight-3 { color: #B98A18; }
+
+/* =========================================================
+   About
+   ========================================================= */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.about-text p { max-width: 520px; }
+.about-svg { width: 100%; max-width: 320px; }
+
+.photo-frame {
+  position: relative;
+  background: #fff;
+  padding: 14px 14px 46px;
+  border-radius: 4px;
+  box-shadow: 0 12px 28px rgba(32, 31, 29, 0.18);
+  transform: rotate(-3deg);
+  max-width: 320px;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+.photo-frame:hover { transform: rotate(-1deg) scale(1.02); }
+.photo-frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.photo-tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 90px;
+  height: 28px;
+  background: var(--pencil-3);
+  opacity: 0.75;
+  transform: translateX(-50%) rotate(-4deg);
+}
+.photo-caption {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: var(--muted);
+  margin: 0;
+}
+@media (max-width: 800px) {
+  .photo-frame { max-width: 260px; }
+}
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-visual { order: -1; display: flex; justify-content: center; }
+  .about-svg { max-width: 220px; }
+}
+
+/* =========================================================
+   Hobi cards
+   ========================================================= */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.card:hover { transform: translateY(-4px); }
+.card h3 { margin: 1rem 0 0.5rem; font-size: 1.15rem; }
+.card p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+.card-icon { width: 44px; height: 44px; }
+
+.card-1 { color: var(--pencil-2); }
+.card-1:hover { border-color: var(--pencil-2); }
+.card-2 { color: var(--pencil-1); }
+.card-2:hover { border-color: var(--pencil-1); }
+.card-3 { color: #B98A18; }
+.card-3:hover { border-color: #B98A18; }
+
+@media (max-width: 800px) {
+  .cards { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Galeri
+   ========================================================= */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+.gallery-item {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-item.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--line);
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  background: var(--paper-alt);
+}
+.gallery.gallery-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 720px;
+}
+@media (max-width: 800px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4.5rem 0 2.5rem;
+}
+.footer .eyebrow { color: #A9A296; }
+.footer-inner { display: flex; flex-direction: column; gap: 2.5rem; }
+.footer-title {
+  position: relative;
+  display: inline-block;
+  color: var(--paper);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 1rem;
+}
+.footer p { color: #C9C3B5; max-width: 480px; }
+.footer .btn-primary { background: var(--pencil-1); color: var(--ink); margin-top: 0.5rem; }
+.footer .btn-primary:hover { box-shadow: 0 6px 0 var(--paper); }
+.footer-copy {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: #8A8478;
+  border-top: 1px solid #3A382F;
+  padding-top: 1.5rem;
+  margin: 0;
+}
+
+/* =========================================================
+   Reveal on scroll
+   ========================================================= */
+.section-inner, .hero-inner { opacity: 0; transform: translateY(16px); }
+.section-inner.is-visible, .hero-inner.is-visible {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* =========================================================
+   Mobile nav
+   ========================================================= */
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .nav-links.open { max-height: 260px; }
+  .nav-links a { padding: 1rem 1.5rem; border-top: 1px solid var(--line); }
+}
